@@ -15,6 +15,7 @@ RUN apk add --no-cache build-base git --virtual build-packages \
 	&& cd ../.. \
 	&& git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git \
 	&& xz -dkv mecab-ipadic-neologd/seed/mecab-user-dict-seed.*.csv.xz \
-	&& /usr/local/libexec/mecab/mecab-dict-index -d /usr/local/lib/mecab/dic/ipadic -u /usr/local/lib/mecab/dic/mecab-user-dict-seed.dic -f utf-8 -t utf-8 mecab-ipadic-neologd/seed/mecab-user-dict-seed.*.csv \
+	&& /usr/local/libexec/mecab/mecab-dict-index -d /usr/local/lib/mecab/dic/ipadic -u /usr/local/lib/mecab/dic/neologd.dic -f utf-8 -t utf-8 mecab-ipadic-neologd/seed/mecab-user-dict-seed.*.csv \
 	&& rm -fr mecab mecab-ipadic-neologd \
-	&& apk del build-packages
+	&& apk del build-packages \
+	&& echo "userdic = /usr/local/lib/mecab/dic/neologd.dic" >> /usr/local/etc/mecabrc
